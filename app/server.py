@@ -10,6 +10,19 @@ from pathlib import Path
 import uvicorn, aiohttp, asyncio
 import sys, numpy as np
 
+# imports from jupyter
+import tensorflow as tf
+import pandas as pd
+import numpy as np
+from keras_preprocessing.image import ImageDataGenerator
+from keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Flatten, Input, Conv2D, multiply, LocallyConnected2D, Lambda, BatchNormalization
+from tensorflow.keras.models import Model
+
+
 path = Path(__file__).parent
 model_file_url = 'hhttps://github.com/tvaingart/bone-age-assessment-webapp/blob/main/models/female_model_weights_resnet.h5?raw=true'
 model_file_name = 'model'
