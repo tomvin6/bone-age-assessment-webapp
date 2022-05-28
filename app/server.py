@@ -104,7 +104,7 @@ async def upload(request):
     return model_predict(IMG_FILE_SRC, model)
 
 def model_predict(img_path, model):
-    result = []; img = image.load_img(img_path, target_size=(224, 224))
+    result = []; img = image.load_img(img_path, target_size=(384, 384))
     x = preprocess_input(np.expand_dims(image.img_to_array(img), axis=0))
     predictions = decode_predictions(model.predict(x), top=3)[0] # Get Top-3 Accuracy
     for p in predictions: _,label,accuracy = p; result.append((label,accuracy))
