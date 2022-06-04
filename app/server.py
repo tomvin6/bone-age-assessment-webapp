@@ -125,12 +125,18 @@ async def download_file(url, dest):
             data = await response.read()
             with open(dest, 'wb') as f: f.write(data)
 
+def mae_months(in_gt, in_pred):
+  return mean_absolute_error(boneage_div*in_gt, boneage_div*in_pred)
+
 async def setup_model():
     #UNCOMMENT HERE FOR CUSTOM TRAINED MODEL
-    # await download_file(model_file_url, MODEL_PATH)
+    await download_file(model_file_url, MODEL_PATH)
+    model = get_resnet_model()
+    model.load_weights(MODEL_PATH)
     # model = load_model(MODEL_PATH) # Load your Custom trained model
     # model._make_predict_function()
-    model = get_resnet_model()
+    model.compile(optimizer = 'adam', loss = 'mse', metrics = [mae_months])
+    model.summary()
     #model = ResNet50(weights='imagenet') # COMMENT, IF you have Custom trained model
     return model
 
