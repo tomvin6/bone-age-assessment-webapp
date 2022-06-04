@@ -32,6 +32,7 @@ app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Reques
 app.mount('/static', StaticFiles(directory='app/static'))
 
 MODEL_PATH = path/'models'/f'{model_file_name}.h5'
+IMG_FOLDER = '/tmp/'
 IMG_FILE_SRC = '/tmp/saved_image.png'
 REL_IMG_FILE_SRC = 'saved_image.png'
 
@@ -89,7 +90,7 @@ def predict(img_path, male=True):
                 'path': [IMG_FILE_SRC]
                 })
   test_generator = test_datagen.flow_from_dataframe(
-      fake_test_df, directory=fake_test_loc, x_col=x_col, 
+      fake_test_df, directory=IMG_FOLDER, x_col=x_col, 
       y_col='boneage_zscore', target_size=get_param('target_size'), color_mode='rgb',
       batch_size=get_param('validation_batch_size'), shuffle=False,
       class_mode = 'sparse', validate_filenames=True)
