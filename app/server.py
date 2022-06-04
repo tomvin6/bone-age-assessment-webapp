@@ -33,6 +33,7 @@ app.mount('/static', StaticFiles(directory='app/static'))
 
 MODEL_PATH = path/'models'/f'{model_file_name}.h5'
 IMG_FILE_SRC = '/tmp/saved_image.png'
+REL_IMG_FILE_SRC = 'saved_image.png'
 
 # get resnet model
 def get_resnet_model(input_shape=(384, 384, 3)):
@@ -74,6 +75,40 @@ def get_resnet_model(input_shape=(384, 384, 3)):
   return bone_age_model
 
 
+def predict(img_path, male=True):
+  img = load_image(img_path, False)
+  # preprocess: 
+  test_datagen = ImageDataGenerator(preprocessing_function = preprocess_input)
+  fake_test_df = pd.DataFrame({
+                'id': [1],
+                'boneage    male': [True], 
+                'boneage_zscore': ['123'],
+                'boneage_category': ['abc'],
+                'rel_path': [REL_IMG_FILE_SRC],
+                'path': [IMG_FILE_SRC]
+                })
+  test_generator = test_datagen.flow_from_dataframe(
+      fake_test_df, directory=fake_test_loc, x_col=x_col, 
+      y_col='boneage_zscore', target_size=get_param('target_size'), color_mode='rgb',
+      batch_size=get_param('validation_batch_size'), shuffle=False,
+      class_mode = 'sparse', validate_filenames=True)
+  test_generator.reset()
+  start = time.time()
+  score = model.evaluate(test_generator, steps=1)
+  print('model output: ', score)
+  
+def load_image(img_path, show=True):
+    img = image.load_img(img_path)
+    img_tensor = image.img_to_array(img)                    # (height, width, channels)
+    img_tensor = np.expand_dims(img_tensor, axis=0)         # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
+    img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
+
+    if show:
+        plt.imshow(img_tensor[0])                           
+        plt.axis('off')
+        plt.show()
+    return img_tensor
+
 async def download_file(url, dest):
     if dest.exists(): return
     async with aiohttp.ClientSession() as session:
@@ -101,6 +136,7 @@ async def upload(request):
     data = await request.form()
     img_bytes = await (data["file"].read())
     with open(IMG_FILE_SRC, 'wb') as f: f.write(img_bytes)
+    predict(IMG_FILE_SRC)
     return model_predict(IMG_FILE_SRC, model)
 
 def model_predict(img_path, model):
