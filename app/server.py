@@ -25,7 +25,7 @@ from tensorflow.keras.models import Model
 
 
 path = Path(__file__).parent
-model_file_url = 'hhttps://github.com/tvaingart/bone-age-assessment-webapp/blob/main/models/female_model_weights_resnet.h5?raw=true'
+model_file_url = 'https://github.com/tvaingart/bone-age-assessment-webapp/blob/main/models/female_model_weights_resnet.h5?raw=true'
 model_file_name = 'model'
 
 app = Starlette()
