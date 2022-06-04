@@ -9,6 +9,7 @@ from starlette.middleware.cors import CORSMiddleware
 from pathlib import Path
 import uvicorn, aiohttp, asyncio
 import sys, numpy as np
+import time
 
 # imports from jupyter
 import tensorflow as tf
@@ -35,6 +36,12 @@ MODEL_PATH = path/'models'/f'{model_file_name}.h5'
 IMG_FOLDER = '/tmp/'
 IMG_FILE_SRC = '/tmp/saved_image.png'
 REL_IMG_FILE_SRC = 'saved_image.png'
+
+x_col = 'path'
+y_col = 'boneage'
+width = height = 384
+target_size = (width, height)
+
 
 # get resnet model
 def get_resnet_model(input_shape=(384, 384, 3)):
@@ -91,8 +98,8 @@ def predict(img_path, male=True):
                 })
   test_generator = test_datagen.flow_from_dataframe(
       fake_test_df, directory=IMG_FOLDER, x_col=x_col, 
-      y_col='boneage_zscore', target_size=get_param('target_size'), color_mode='rgb',
-      batch_size=get_param('validation_batch_size'), shuffle=False,
+      y_col='boneage_zscore', target_size=target_size, color_mode='rgb',
+      batch_size=1, shuffle=False,
       class_mode = 'sparse', validate_filenames=True)
   test_generator.reset()
   start = time.time()
