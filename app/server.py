@@ -107,11 +107,12 @@ def predict(img_path, male=True):
   test_generator.reset()
   start = time.time()
   test_steps = math.ceil((len(test_generator.classes) / 64))
-
+  print('before prediction')
   months_prediction = model.predict_generator(test_generator)
   print('months prediction ' + str(months_prediction))
   score = model.evaluate(test_generator, steps=test_steps)
   print('model output: ', score)
+  return 111
   
 def load_image(img_path, show=False):
     img = image.load_img(img_path)
