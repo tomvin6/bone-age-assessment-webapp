@@ -42,6 +42,8 @@ x_col = 'path'
 y_col = 'boneage'
 width = height = 384
 target_size = (width, height)
+boneage_mean = 0
+boneage_div = 1.0
 
 
 # get resnet model
