@@ -99,6 +99,7 @@ def predict(img_path, male=True):
                 'rel_path': [REL_IMG_FILE_SRC],
                 'path': [IMG_FILE_SRC]
                 })
+  print('before generator')
   test_generator = test_datagen.flow_from_dataframe(
       fake_test_df, directory=IMG_FOLDER, x_col=x_col, 
       y_col='boneage_zscore', target_size=target_size, color_mode='rgb',
@@ -156,6 +157,7 @@ loop.close()
 
 @app.route("/upload", methods=["POST"])
 async def upload(request):
+    print("upload was done right now!!!")
     data = await request.form()
     img_bytes = await (data["file"].read())
     with open(IMG_FILE_SRC, 'wb') as f: f.write(img_bytes)
@@ -163,6 +165,7 @@ async def upload(request):
     return model_predict(IMG_FILE_SRC, model)
 
 def model_predict(img_path, model):
+    print("going to model_predict!!!")
     result = []; img = image.load_img(img_path, target_size=(384, 384))
     x = preprocess_input(np.expand_dims(image.img_to_array(img), axis=0))
     predictions = decode_predictions(model.predict(x), top=3)[0] # Get Top-3 Accuracy
