@@ -103,10 +103,14 @@ def predict(img_path, male=True):
       fake_test_df, directory=IMG_FOLDER, x_col=x_col, 
       y_col='boneage_zscore', target_size=target_size, color_mode='rgb',
       batch_size=1, shuffle=False,
-      class_mode = 'sparse', validate_filenames=True)
+      class_mode = 'sparse', validate_filenames=False)
   test_generator.reset()
   start = time.time()
-  score = model.evaluate(test_generator, steps=1)
+  test_steps = math.ceil((len(test_generator.classes) / 64))
+
+  months_prediction = model.predict_generator(test_generator)
+  print('months prediction ' + str(months_prediction))
+  score = model.evaluate(test_generator, steps=test_steps)
   print('model output: ', score)
   
 def load_image(img_path, show=False):
