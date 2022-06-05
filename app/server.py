@@ -23,7 +23,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Flatten, Input, Conv2D, multiply, LocallyConnected2D, Lambda, BatchNormalization
 from tensorflow.keras.models import Model
 from keras.metrics import mean_absolute_error
-
+import math
 
 path = Path(__file__).parent
 model_file_url = 'https://github.com/tvaingart/bone-age-assessment-webapp/blob/main/models/female_model_weights_resnet.h5?raw=true'
