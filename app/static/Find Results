@@ -1,0 +1,41 @@
+Searching 90 files for "saved_"
+
+/Users/tvaingart/dev/bone-age-assessment-webapp/app/server.py:
+   45  
+   46  IMG_FOLDER = '/tmp/'
+   47: IMG_FILE_SRC = '/tmp/saved_image.png'
+   48: REL_IMG_FILE_SRC = 'saved_image.png'
+   49  
+   50  x_col = 'path'
+
+/Users/tvaingart/dev/bone-age-assessment-webapp/app/static/result1.html:
+   31              <a href="/"><img height="42" width="42" src="static/images/25694.png"></a>
+   32  			<span class="contact100-form-title">Bone Age Assessment results</span>
+   33:             <!-- <img src="static/saved_image.png"> -->
+   34:             <img src="" id="saved_image" />
+   35              <div class="wrap-input100 validate-input">
+   36              <br>
+
+/Users/tvaingart/dev/bone-age-assessment-webapp/app/static/js/show_result.js:
+    3  // For Image
+    4  var dataImage = localStorage.getItem('imgData');
+    5: saved_image = el('saved_image');
+    6: saved_image.src = "data:image/jpeg;base64," + dataImage;
+
+7 matches across 3 files
+
+
+Searching 90 files for "top 3"
+
+0 matches
+
+Searching 90 files for "top-3"
+
+/Users/tvaingart/dev/bone-age-assessment-webapp/app/server.py:
+  244      result = []; img = image.load_img(img_path, target_size=(384, 384))
+  245      x = preprocess_input(np.expand_dims(image.img_to_array(img), axis=0))
+  246:     predictions = decode_predictions(model.predict(x), top=3)[0] # Get Top-3 Accuracy
+  247      for p in predictions: _,label,accuracy = p; result.append((label,accuracy))
+  248      result_html1 = path/'static'/'result1.html'
+
+1 match in 1 file

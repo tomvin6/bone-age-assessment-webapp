@@ -10,6 +10,9 @@ function fileChange(e) {
 
         // Activate Submit Button
         el('submit_btn').type = "submit";
+        //is_male = document.getElementById('sex').checked
+        sex = document.querySelector('input[name="sex"]:checked').value;
+        //document.getElementById('sex').value = sex
         document.getElementById('inp_img').value = '';
         var reader = new FileReader();  
         reader.onload = function(readerEvent) {
@@ -26,26 +29,6 @@ function fileChange(e) {
                 // console.log("Updated width:",w, "Updated height:", h);
 
                 var canvas = document.createElement('canvas');
-                // // FORCEFUL to portrait mode only images
-                // if (w > h) {
-                //     // canvas.width = h;
-                //     // canvas.height = w;
-                //     canvas.width = w;
-                //     canvas.height = h;
-                //     var ctx = canvas.getContext('2d');
-                //     // move the rotation point to the center of the rect
-                //     // ctx.translate( h / 2, w / 2);
-                //     ctx.translate( w / 2, h / 2);
-                //     // Rotate Image
-                //     ctx.rotate(-90 * Math.PI / 180);
-                //     // ctx.drawImage(image, -h / 2, -w / 2, h, w);
-                //     ctx.drawImage(image, -w / 2, -h / 2, w, h);
-                // }
-                // else {
-                //     canvas.width = w;
-                //     canvas.height = h;
-                //     canvas.getContext('2d').drawImage(image, 0, 0, w, h);
-                // }
                 
                 //  NO FORCEFUL Just Use Default Image
                 canvas.width = w;
